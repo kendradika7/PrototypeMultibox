@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATM - Transaksi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#324154] flex justify-center items-center w-[100%] h-[100vh]">
+  <main class="bg-[#597298] flex justify-between w-[80%] rounded-lg">
+    <div class="w-[60%] flex flex-col justify-center items-center px-[100px] gap-[20px]">
+      <p class="text-[30px] font-mono text-white text-center">Silahkan Pilih Paket Nominal</p>
+      <div class="flex justify-between w-[100%]">
+        <button onclick="Tunai(tunai.seratus)" class="text-[25px] font-mono text-white"><- 100.000</button>
+        <button onclick="Tunai(tunai.limaratus)" class="text-[25px] font-mono text-white">500.000 -></button>
+      </div>
+      <div class="flex justify-between w-[100%]">
+        <button onclick="Tunai(tunai.duaratus)" class="text-[25px] font-mono text-white"><- 200.000</button>
+        <button onclick="Tunai(tunai.satujuta)" class="text-[25px] font-mono text-white">1.000.000 -></button>
+      </div>
+      <div class="flex justify-between w-[100%]">
+        <button onclick="Tunai(tunai.tigaratus)" class="text-[25px] font-mono text-white"><- 300.000</button>
+        <button onclick="Tunai(tunai.satusetengah)" class="text-[25px] font-mono text-white">1.500.000 -></button>
+      </div>
+      <div class="flex justify-between w-[100%]">
+        <a href="nominal.html" class="flex justify-center items-start gap-[10px]">
+          <p class="text-[25px] font-mono text-white"><- </p>
+          <p class="text-[25px] font-mono text-white text-start">Nominal <br>Lain</p>
+        </a>
+        <a href="ambilKartu.html" onclick="return confirm('Fitur tidak tersedia, apakah anda ingin melanjutkan?')" class="flex justify-center items-start gap-[10px]">
+          <p class="text-[25px] font-mono text-white text-end">Transaksi <br>Lain</p>
+          <p class="text-[25px] font-mono text-white"> -></p>
+        </a>
+      </div>
+    </div>
+    <div class="w-[40%]">
+      <img src="https://github.com/rpl-yaso-2223/simulasi_ukkrpl_2023/blob/main/src/images/ambil-uang.jpg?raw=true">
+    </div>
+  </main>
+
+
+  <script>
+    let tunai = { 
+      seratus: 100000, 
+      duaratus: 200000,
+      tigaratus: 300000, 
+      limaratus: 500000, 
+      satujuta: 1000000, 
+      satusetengah: 1500000,
+    }
+
+    let saldo = localStorage.getItem('saldo')
+    if (!saldo) {
+      localStorage.setItem('saldo', 1000000)
+    }
+
+    alert(`Anda memiliki saldo sebesar Rp.${saldo}`)
+
+    function Tunai(value) {
+      if (value > saldo) {
+        alert("Saldo tidak cukup!")
+      }
+      else if (confirm(`Anda mengambil uang sebesar Rp.${value}, Sisa saldo anda tinggal Rp.${saldo - value}`)) {
+        localStorage.setItem('saldo', parseInt(saldo - value))
+        location.href = "ambilKartu.html"
+      }
+    }
+
+    function Clear() {
+      localStorage.setItem('saldo', 1000000)
+      saldo = localStorage.getItem('saldo')
+      alert(`Uang anda telah di kembalikan menjadi ${saldo}`)
+    }
+  </script>
+
+</body>
+</html>

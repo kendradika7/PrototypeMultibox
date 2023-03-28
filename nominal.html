@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATM - Nominal Lain</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#324154] flex justify-center items-center w-[100%] h-[100vh]">
+  <main class="bg-[#597298] flex justify-center items-center w-[80%] rounded-lg">
+    <div class="w-[60%] flex flex-col justify-center items-center gap-[30px] px-[60px]">
+      <p class="text-[30px] font-mono text-white text-center">Masukkan Jumlah Nominal Pecahan 50.000 atau 100.000</p>
+      <div class="flex flex-row items-center gap-[10px]">
+        <input class="text-[20px] rounded-[3px] font-mono outline-none text-center" type="number" id="nominalValue">
+        <button class="text-[23px] font-mono text-green-300" onclick="Nom()">ENTER>></button>
+        <a href="transaksi.html" class="text-[23px] font-mono text-red-300">CANCEL>></a>
+      </div>
+      <p class="text-[30px] font-mono text-white">Tekan "CANCEL" Untuk Membatalkan</p>
+    </div>
+    <div class="w-[40%]">
+      <img src="https://github.com/rpl-yaso-2223/simulasi_ukkrpl_2023/blob/main/src/images/ambil-uang.jpg?raw=true">
+    </div>
+  </main>
+
+  <script>
+
+    let nominal = document.getElementById("nominalValue")
+    let saldo = localStorage.getItem('saldo')
+    if (!saldo) {
+      localStorage.setItem('saldo', 1000000)
+    }
+
+    alert(`Anda memiliki saldo sebesar Rp.${saldo}`)
+
+    function Nom() {
+      if (nominal.value == '') {
+        alert("Nominal tidak boleh kosong!")
+      }
+      else if (parseInt(nominal.value) <= 0 ) {
+        alert("Nominal tidak boleh minus")
+      }
+      else if (parseInt(nominal.value) > parseInt(saldo)) {
+        alert("Saldo tidak cukup!")
+      } 
+      else if (parseInt(nominal.value) % 50000 == 0) {
+        if (confirm(`Anda mengambil uang sebesar Rp.${nominal.value}, Sisa saldo anda tinggal Rp.${saldo - nominal.value}`)) {
+          localStorage.setItem('saldo', parseInt(saldo - nominal.value))
+          location.href = "ambilKartu.html"
+        }
+      }
+      else {
+        alert("Nominal tidak sesuai!")
+      }
+    }
+
+  </script>
+
+</body>
+</html>
